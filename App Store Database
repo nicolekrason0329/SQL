@@ -1,0 +1,34 @@
+/**Apparel Store Database
+**/
+
+CREATE TABLE store (id INTEGER PRIMARY KEY, item TEXT, quantity INTEGER, price INTEGER, purchased INTEGER);
+
+INSERT INTO store VALUES (1, "T-shirts", 50, 14.99, 5);
+INSERT INTO store VALUES (2, "Jeans", 50, 24.99, 2);
+INSERT INTO store VALUES (3, "Blouses", 50, 12.99, 10);
+INSERT INTO store VALUES (4, "Sneakers", 30, 29.99, 3);
+INSERT INTO store VALUES (5, "Shirts", 30, 12.99, 11);
+INSERT INTO store VALUES (6, "Pants", 50, 16.99, 4);
+INSERT INTO store VALUES (7, "Kahkis", 50, 24.99, 1);
+INSERT INTO store VALUES (8, "Sandals", 25, 9.99, 9);
+INSERT INTO store VALUES (9, "Boots", 50, 49.99, 14);
+INSERT INTO store VALUES (10, "Hats", 100, 5.99, 8);
+INSERT INTO store VALUES (11, "Leggings", 25, 16.99, 6);
+INSERT INTO store VALUES (12, "Sweaters", 50, 19.99, 15);
+INSERT INTO store VALUES (13, "Hoodies", 75, 24.99, 7);
+INSERT INTO store VALUES (14, "Pets Clothing", 60, 9.99, 13);
+INSERT INTO store VALUES (15, "Shorts", 45, 14.99, 12);
+
+--Database in order by price
+SELECT * FROM store
+ORDER BY price;
+
+-- The average price of the itmes
+SELECT AVG(price) "Average price of all items"
+FROM store
+
+--5 most purchased items
+SELECT item, price, purchased 
+FROM store 
+ORDER BY purchased
+limit 5;
