@@ -25,7 +25,7 @@ ORDER BY price;
 
 -- The average price of the itmes
 SELECT AVG(price) "Average price of all items"
-FROM store
+FROM store;
 
 --5 most purchased items
 SELECT item, price, purchased 
