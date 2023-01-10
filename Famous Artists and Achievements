@@ -1,0 +1,50 @@
+/* Creating a table to display famous singers.  What songs they wrote, where they are from and awards they've won and the year they won them*/
+
+create table singers (
+    id integer primary key autoincrement,
+    name TEXT,
+    songs TEXT);
+    
+insert into singers (name, songs) values ("Taylor Swift", "You Belong With Me");
+insert into singers (name, songs) values ("Keith Urban", "Somebody Like You");
+insert into singers (name, songs) values ("Zedd", "Clarity");
+insert into singers (name, songs) values ("Whitney Houston", "I Wanna Dance With Somebody");
+insert into singers (name, songs) values ("Metallica", "One");
+
+create table music (
+    id integer primary key autoincrement,
+    person_id TEXT,
+    hometown TEXT, 
+    achievements TEXT);
+
+insert into music (person_id, hometown, achievements) values (1, "West Reading, PA", "Female Vocalist of the Year");
+insert into music (person_id, hometown, achievements) values (2, "Whangārei, New Zealand", "Top Male Vocalist of the Year");
+insert into music (person_id, hometown, achievements) values (3, "Saratov, Russia", "Best Electro DJ");
+insert into music (person_id, hometown, achievements) values (4, "Newark, NJ", "Favorite Pop/Rock Female Artist");
+insert into music (person_id, hometown, achievements) values (5, "Los Angeles, CA", "Top Rock Album");
+
+create table achievements (
+    id integer primary key autoincrement,
+    award1_id INTEGER,
+    award2_id INTEGER);
+    
+insert into achievements (award1_id, award2_id) values (1, 1);
+insert into achievements (award1_id, award2_id) values (2, 2);
+insert into achievements (award1_id, award2_id) values (3, 3);
+insert into achievements (award1_id, award2_id) values (4, 4);
+insert into achievements (award1_id, award2_id) values (5, 5);
+
+/* Artist & hometown */
+
+select s.name, m.hometown
+from singers s 
+join music m
+on s.id = m.person_id;
+
+/* Song & achievement */
+select a.songs, m.achievements
+from achievements
+join singers a
+on achievements.award1_id = a.id
+join music m
+on achievements.award2_id = m.id;
