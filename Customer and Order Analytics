@@ -1,0 +1,48 @@
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data.
+
+-- #1 How many orders were placed in January?
+select count (orderid)
+from bit_db.JanSales
+where length (orderid) = 6;
+
+-- #2 How many of those orders were for an iPhone?
+select count (Product)
+from bit_db.JanSales
+where Product = 'iPhone';
+
+-- #3 Select the customer account numbers for all the orders that were placed in February.
+select distinct acctnum
+from bit_db.customers cust
+inner join bit_db.FebSales Feb
+on cust.order_id = Feb.orderID
+where length (orderid) = 6
+and orderid <> 'Order ID';
+
+-- #4 Which product was the cheapest one sold in January, and what was the price?
+select distinct Product, price
+from bit_db.JanSales
+where price in (select min (price)
+from bit_db.JanSales);
+
+-- #5 What is the total revenue for each product sold in January?
+select sum(quantity) * price as Revenue, product
+from bit_db.jansales
+group by product;
+
+-- #6 Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+select sum (quantity), Product,
+sum(quantity) * price as Revenue
+from bit_db.FebSales
+where location = '548 Lincoln St, Seattle, WA 98101'
+group by location;
+
+-- #7 How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
+select 
+count(distinct cust.acctnum) as acct_num, 
+avg(quantity*price) as avg_price_spent
+from BIT_DB.FebSales Feb
+left join BIT_DB.customers cust
+on FEB.orderid=cust.order_id
+where Feb.Quantity>2
+and length(orderid) = 6 
+and orderid <> 'Order ID';
