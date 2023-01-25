@@ -1,0 +1,86 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL. 
+
+-- #1 What is the average danceability by artist and track?
+
+select artist_name as Artist, 
+track_name as Song, 
+avg(danceability) as 'Avg Danceability'
+from spotifydata
+group by danceability;
+
+-- #2 Who are the top 10 artists based on popularity?
+
+select artist_name as Artist, 
+max(popularity) as Popularity
+from spotifydata
+group by Popularity
+limit 10;
+
+-- #3 What artist released the longest song?
+      
+select artist_name as Artist, track_name as Song, 
+max(duration_ms) as Duration
+from spotifydata
+order by Duration
+limit 1;
+
+-- #4 What's the average danceability for the 10 most popular songs?
+
+select artist_name as Artist, track_name as Song, 
+avg(danceability) as 'Avg Danceability', 
+max(Popularity) as Popularity
+from spotifydata
+group by Artist, Song
+order by popularity desc
+limit 10;
+
+-- #5 What's the average energy for the 5 least popular songs?
+
+select artist_name as Artist, track_name as Song,
+avg(energy) as 'Avg Energy', min(popularity) as Popularity
+from spotifydata
+group by Artist, Song
+order by Popularity
+limit 5;
+
+-- #6 What is the average energy, song key and duration in total?
+
+select avg(energy), avg(song_key), avg(duration_ms)
+from spotifydata
+order by energy;
+
+-- #7 Which artist is the most frequent?
+
+SELECT artist_name as Most_Frequent_Artist
+from spotifydata
+GROUP BY Most_Frequent_Artist
+ORDER BY COUNT(*) DESC
+limit 2;
